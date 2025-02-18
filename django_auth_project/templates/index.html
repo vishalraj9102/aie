@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login System with Logout</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #6e45e2, #88d3ce);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 2rem;
+        }
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            height: 80px;
+            width: 80px;
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            border: 2px solid #fff;
+        }
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: #fff;
+            padding: 2.5rem;
+            border-radius: 1.2rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            text-align: center;
+            margin-top: 4rem;
+        }
+        h2 { margin-bottom: 1.5rem; color: #333; }
+        .form-group { margin-bottom: 1.2rem; text-align: left; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: #555; }
+        .form-group input {
+            width: 100%;
+            padding: 0.7rem;
+            border: 1px solid #ccc;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+        }
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            border: none;
+            color: #fff;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            margin-top: 0.7rem;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+        }
+        .otp-btn { background: #f59e0b; }
+        .otp-btn:hover { background: #d97706; }
+        .verify-btn { background: #1d4ed8; }
+        .verify-btn:hover { background: #1e40af; }
+        .login-btn { background: #10b981; }
+        .login-btn:hover { background: #059669; }
+        .logout-btn { background: #ef4444; }
+        .logout-btn:hover { background: #dc2626; }
+        .message { text-align: center; margin-top: 1rem; color: #333; }
+        @media (max-width: 600px) {
+            .container { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <img src="logo.png" alt="App Logo" class="logo">
+    <div class="container" id="registerForm">
+        <h2>Create Account</h2>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" required>
+        </div>
+        <button class="otp-btn" id="sendOtpBtn">Send OTP</button>
+
+        <div class="form-group">
+            <label for="otp">OTP:</label>
+            <input type="text" id="otp" placeholder="Enter OTP">
+        </div>
+        <button class="verify-btn" id="verifyOtpBtn">Verify OTP</button>
+        <div class="message" id="message"></div>
+        <button class="login-btn" id="loginBtn">Already have an account? Login</button>
+    </div>
+
+    <div class="container" id="loginForm" style="display:none;">
+        <h2>Welcome Back</h2>
+        <div class="form-group">
+            <label for="loginEmail">Email:</label>
+            <input type="email" id="loginEmail" required>
+        </div>
+        <div class="form-group">
+            <label for="loginPassword">Password:</label>
+            <input type="password" id="loginPassword" required>
+        </div>
+        <button class="login-btn" id="finalLoginBtn">Login</button>
+        <button class="logout-btn" id="logoutBtn">Logout</button>
+        <div class="message" id="loginMessage"></div>
+    </div>
+
+    <script>
+        const apiBaseUrl = "http://127.0.0.1:8000/api";
+
+        function getCSRFToken() {
+            const csrfToken = document.cookie.match(/csrftoken=([^;]+)/);
+            return csrfToken ? csrfToken[1] : '';
+        }
+
+        async function sendOTP() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const csrfToken = getCSRFToken();
+
+            try {
+                const response = await fetch(`${apiBaseUrl}/register/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+                const result = await response.json();
+                document.getElementById('message').innerText = response.ok ? `OTP sent: ${result.message}` : `Error: ${result.message}`;
+            } catch (error) {
+                document.getElementById('message').innerText = 'Failed to send OTP. Check the server connection.';
+            }
+        }
+
+        async function verifyOTP() {
+            const email = document.getElementById('email').value;
+            const otp = document.getElementById('otp').value;
+            const csrfToken = getCSRFToken();
+
+            try {
+                const response = await fetch(`${apiBaseUrl}/register/verify/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken
+                    },
+                    body: JSON.stringify({ email, otp })
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    document.getElementById('message').innerText = `Success: ${result.message}`;
+                    alert('Verification successful! You can now log in.');
+                } else {
+                    document.getElementById('message').innerText = `Error: ${result.message}`;
+                }
+            } catch (error) {
+                document.getElementById('message').innerText = 'Failed to verify OTP. Check the server connection.';
+            }
+        }
+
+        function showLoginForm() {
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'block';
+        }
+
+        async function loginUser() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const csrfToken = getCSRFToken();
+
+            try {
+                const response = await fetch(`${apiBaseUrl}/login/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    alert('Login successful!');
+                    localStorage.setItem('userEmail', email);
+                } else {
+                    document.getElementById('loginMessage').innerText = `Login failed: ${result.message}`;
+                }
+            } catch (error) {
+                document.getElementById('loginMessage').innerText = 'Failed to login. Check the server connection.';
+            }
+        }
+
+        function logoutUser() {
+            localStorage.removeItem('userEmail');
+            alert('Logged out successfully!');
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'block';
+        }
+
+        document.getElementById('sendOtpBtn').addEventListener('click', sendOTP);
+        document.getElementById('verifyOtpBtn').addEventListener('click', verifyOTP);
+        document.getElementById('loginBtn').addEventListener('click', showLoginForm);
+        document.getElementById('finalLoginBtn').addEventListener('click', loginUser);
+        document.getElementById('logoutBtn').addEventListener('click', logoutUser);
+    </script>
+</body>
+</html>

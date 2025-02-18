@@ -1,0 +1,6 @@
+django==4.2
+djangorestframework==3.14
+drf-yasg==1.21
+django-environ==0.10
+django-otp==1.1
+django-axes==5.3
