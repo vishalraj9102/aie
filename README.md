@@ -117,3 +117,19 @@ python manage.py runserver
 
 ---
 Feel free to check out the project on GitHub: [Django API Implementation Test](https://github.com/vishalraj9102/aie.git)
+
+## 🖼️ **Output Screenshots**
+### ✅ **Register**
+![Register Output](static/s-1.png)
+
+### ✅ **Login**
+![Login Output](static/s-2.png)
+
+### ✅ **Logout**
+![Logout](static/s-3.png)
+
+### ✅ **Mailtrap**
+![Output](static/s-4.png)
+
+### ✅ **Admin Page**
+![Admin](static/s-5.png)
