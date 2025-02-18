@@ -1,15 +1,38 @@
-Here is a responsive `README.md` template for your Django API Implementation Test:
-
-```markdown
 # Django API Implementation Test
 
 ![Django Logo](https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Django_logo.svg/1200px-Django_logo.svg.png)
 
-## Objective:
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Django Version](https://img.shields.io/badge/django-3.2.10-green.svg)](https://www.djangoproject.com/)
+
+## Table of Contents
+
+- [Objective](#objective)
+- [Project Requirements](#project-requirements)
+- [Task Breakdown](#task-breakdown)
+  - [1. Project Setup & Configuration](#1-project-setup--configuration)
+  - [2. User Registration API (POST `/api/register/`)](#2-user-registration-api-post-apiregister)
+  - [3. User Registration API (POST `/api/register/verify`)](#3-user-registration-api-post-apiregisterverify)
+  - [4. User Login API (POST `/api/login/`)](#4-user-login-api-post-apilogin)
+  - [5. User Details API (GET `/api/me/`)](#5-user-details-api-get-apime)
+  - [6. Logout API (POST `/api/logout/`)](#6-logout-api-post-apilogout)
+  - [7. Security Considerations](#7-security-considerations)
+- [Installation and Setup](#installation-and-setup)
+- [License](#license)
+
+---
+
+## Objective
+
 The goal of this task is to evaluate the candidate’s ability to implement authentication, API documentation, and security measures using Django, Django REST Framework (DRF), and Swagger.
 
-## Project Requirements:
-Develop a Django-based authentication system with cookie-based authentication. The system should include user registration, login, and a protected endpoint to retrieve the logged-in user’s details.
+---
+
+## Project Requirements
+
+- **Django-based Authentication System**: Implement cookie-based authentication with user registration, login, and a protected endpoint to retrieve the logged-in user’s details.
+- **API Security**: Ensure security measures like CSRF protection, secure cookies, and cookie-based authentication.
+- **Swagger Integration**: Automatically generate Swagger docs and integrate CSRF tokens in the docs.
 
 ---
 
@@ -25,50 +48,43 @@ Develop a Django-based authentication system with cookie-based authentication. T
 ---
 
 ### 2. User Registration API (POST `/api/register/`)
-- Accepts `email`, `password`.
-- Sends a one-time password to the email for verification.
-- Returns a success response upon successful registration.
+- **Request**: Accepts `email`, `password`.
+- **Verification**: Sends a one-time password to the email for verification.
+- **Response**: Returns a success response upon successful registration.
 
 ---
 
 ### 3. User Registration API (POST `/api/register/verify`)
-- Verifies the registration using the API.
+- **Purpose**: Verifies the registration using the OTP.
 
 ---
 
 ### 4. User Login API (POST `/api/login/`)
-- Accepts `email` and `password`.
-- Validates credentials and authenticates the user.
-- On successful authentication:
-  - Sets an authentication token (`auth_token`) in an HTTP-only cookie.
-  - API access should only work after login.
+- **Request**: Accepts `email` and `password`.
+- **Authentication**: Validates credentials and authenticates the user.
+- **Response**: On successful authentication, sets an authentication token (`auth_token`) in an HTTP-only cookie.
+- **Security**: API access is only allowed after login.
 
 ---
 
 ### 5. User Details API (GET `/api/me/`)
-- Returns details of the logged-in user.
-- Should only be accessible if the user is authenticated using the `auth_token` from cookies.
+- **Purpose**: Returns details of the logged-in user.
+- **Security**: Should only be accessible if the user is authenticated using the `auth_token` from cookies.
 
 ---
 
 ### 6. Logout API (POST `/api/logout/`)
-- Clears the `auth_token` cookie from the client.
-- Prevents further API access until the user logs in again.
+- **Purpose**: Clears the `auth_token` cookie from the client.
+- **Effect**: Prevents further API access until the user logs in again.
 
 ---
 
 ### 7. Security Considerations
 - **CSRF Protection**:
   - The `csrftoken` should be automatically generated when Swagger is opened.
-  - All requests should require a CSRF token for validation.
-- **Cookie-based Authentication** only (No token headers).
-- **Secure Cookies**:
-  - Use `HttpOnly` and `Secure` flags to prevent client-side access.
-
----
-
-## Bonus (Optional but Preferred)
-- Implement a simple frontend (HTML + JavaScript) to test authentication flow. If not, Swagger docs will be used to test the authentication flow.
+  - All requests require a CSRF token for validation.
+- **Authentication**: Cookie-based authentication only (No token headers).
+- **Secure Cookies**: Use `HttpOnly` and `Secure` flags to prevent client-side access.
 
 ---
 
@@ -95,15 +111,14 @@ python manage.py migrate
 python manage.py runserver
 ```
 
-Access the API at `http://127.0.0.1:8000/` and the Swagger documentation at `http://127.0.0.1:8000/swagger/`.
+- Access the API at `http://127.0.0.1:8000/`
+- Access Swagger docs at `http://127.0.0.1:8000/swagger/`
 
 ---
-
-## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
 Feel free to check out the project on GitHub: [Django API Implementation Test](https://github.com/vishalraj9102/aie.git)
 ```
 
+This updated `README.md` will look more organized and responsive across different screen sizes, especially for GitHub viewers.
