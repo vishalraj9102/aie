@@ -28,9 +28,7 @@ sdist/
 # Django migrations
 */migrations/*
 
-# Static files and media directories
-/static/
-/media/
+
 
 # IDE configurations
 .idea/
