@@ -120,7 +120,7 @@ Feel free to check out the project on GitHub: [Django API Implementation Test](h
 
 ## 🖼️ **Output Screenshots**
 ### ✅ **Register**
-![Register Output](static/s-1.png)
+![Register Output](django_auth_project/static/s-1.png)
 
 ### ✅ **Login**
 ![Login Output](static/s-2.png)
