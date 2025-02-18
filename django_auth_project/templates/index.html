@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 <head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login System with Logout</title>
+    <title>Login System with AIE</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -73,7 +73,7 @@
     </style>
 </head>
 <body>
-    <img src="logo.png" alt="App Logo" class="logo">
+    <img src="{% static 'logo.png' %}" alt="App Logo" class="logo">
     <div class="container" id="registerForm">
         <h2>Create Account</h2>
         <div class="form-group">
@@ -109,7 +109,6 @@
         <button class="logout-btn" id="logoutBtn">Logout</button>
         <div class="message" id="loginMessage"></div>
     </div>
-
     <script>
         const apiBaseUrl = "http://127.0.0.1:8000/api";
 
