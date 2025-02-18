@@ -116,8 +116,4 @@ python manage.py runserver
 - Access Admin part at `http://127.0.0.1:8000/admin/`
 
 ---
-
----
-
 Feel free to check out the project on GitHub: [Django API Implementation Test](https://github.com/vishalraj9102/aie.git)
-```
