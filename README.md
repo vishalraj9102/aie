@@ -113,6 +113,7 @@ python manage.py runserver
 
 - Access the API at `http://127.0.0.1:8000/`
 - Access Swagger docs at `http://127.0.0.1:8000/swagger/`
+- Access Admin part at `http://127.0.0.1:8000/admin/`
 
 ---
 
@@ -120,5 +121,3 @@ python manage.py runserver
 
 Feel free to check out the project on GitHub: [Django API Implementation Test](https://github.com/vishalraj9102/aie.git)
 ```
-
-This updated `README.md` will look more organized and responsive across different screen sizes, especially for GitHub viewers.
